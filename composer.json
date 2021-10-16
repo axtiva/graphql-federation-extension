@@ -1,0 +1,21 @@
+{
+  "name": "axtiva/graphql-federation-extension",
+  "description": "Extension for axtiva/flexible-graphql-php for support apollo federation integration",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "bpteam",
+      "email": "bpteam22@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Axtiva\\FlexibleGraphql\\FederationExtension\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.4",
+    "webonyx/graphql-php": "^14.0"
+  }
+}
