@@ -8,7 +8,7 @@ for work as subgraph service of Apollo Federation
 Install by composer
 
 ```
-composer require axtiva/flexible-graphql-php-federation-extension
+composer require axtiva/graphql-federation-extension
 ```
 
 ## Demo Federated schema
