@@ -14,8 +14,14 @@
       "Axtiva\\FlexibleGraphql\\FederationExtension\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Axtiva\\FlexibleGraphql\\FederationExtension\\Tests": "tests/"
+    }
+  },
   "require": {
     "php": ">=7.4",
-    "webonyx/graphql-php": "^14.0"
+    "webonyx/graphql-php": "^14.0",
+    "phpunit/phpunit": "^9.5"
   }
 }
