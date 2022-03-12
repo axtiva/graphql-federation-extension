@@ -57,3 +57,11 @@ query{
   }
 }
 ```
+
+## Tests
+
+Run tests
+
+```
+php vendor/bin/phpunit 
+```
