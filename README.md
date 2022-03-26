@@ -1,7 +1,11 @@
 # Flexible Graphql PHP Apollo Federation Extension
 
-Library extend webonyx/graphql-php or axtiva/flexible-graphql-php functionality 
-for work as subgraph service of Apollo Federation
+Library extend [axtiva/flexible-graphql-php](https://github.com/axtiva/flexible-graphql-php) or [webonyx/graphql-php](https://github.com/webonyx/graphql-php) functionality 
+for work as subgraph service of [Apollo Federation](https://www.apollographql.com/docs/federation/)
+
+## Usage in
+
+- [axtiva/flexible-graphql-bundle](//github.com/axtiva/flexible-graphql-bundle) - add support of federation resolvers
 
 ## Setup
 
@@ -10,6 +14,13 @@ Install by composer
 ```
 composer require axtiva/graphql-federation-extension
 ```
+
+## Demo integration
+
+Demo projects with
+
+- [no framework integration](https://github.com/axtiva/example-integration/tree/master/NoFramework) 
+- [symfony bundle integration](https://github.com/axtiva/example-integration/tree/master/FlexibleGraphqlBundle)
 
 ## Demo Federated schema
 
