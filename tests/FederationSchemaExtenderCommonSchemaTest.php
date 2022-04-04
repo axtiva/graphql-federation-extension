@@ -4,6 +4,7 @@ namespace Axtiva\FlexibleGraphql\FederationExtension\Tests;
 
 use Axtiva\FlexibleGraphql\FederationExtension\FederationSchemaExtender;
 use GraphQL\Language\Parser;
+use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Utils\BuildSchema;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +21,7 @@ class FederationSchemaExtenderCommonSchemaTest extends TestCase
         $schemaExtended = FederationSchemaExtender::build($schema);
 
         $this->assertFalse($schemaExtended->getQueryType()->hasField('_entities'), '_entity found');
-        $this->assertFalse($schemaExtended->getQueryType()->hasField('_service'), '_service found');
+        $this->assertTrue($schemaExtended->getQueryType()->hasField('_service'), '_service found');
     }
 
     /**
@@ -33,7 +34,6 @@ class FederationSchemaExtenderCommonSchemaTest extends TestCase
         $schema = BuildSchema::build(Parser::parse($sdl));
         $schemaExtended = FederationSchemaExtender::build($schema);
 
-        $this->expectException(\GraphQL\Error\Error::class);
         $this->assertFalse($schemaExtended->hasType('_Entity'), '_Entity found');
     }
 
@@ -47,7 +47,6 @@ class FederationSchemaExtenderCommonSchemaTest extends TestCase
         $schema = BuildSchema::build(Parser::parse($sdl));
         $schemaExtended = FederationSchemaExtender::build($schema);
 
-        $this->expectException(\GraphQL\Error\Error::class);
         $this->assertFalse($schemaExtended->hasType('_Any'), '_Any found');
     }
 
@@ -61,8 +60,11 @@ class FederationSchemaExtenderCommonSchemaTest extends TestCase
         $schema = BuildSchema::build(Parser::parse($sdl));
         $schemaExtended = FederationSchemaExtender::build($schema);
 
-        $this->expectException(\GraphQL\Error\Error::class);
-        $this->assertFalse($schemaExtended->hasType('_Service'), '_Service found');
+        $this->assertTrue($schemaExtended->hasType('_Service'), '_Service not found');
+        $this->assertTrue($schemaExtended->hasType('Query'), 'Query not found');
+        /** @var ObjectType $query */
+        $query = $schemaExtended->getType('Query');
+        $this->assertTrue((bool) $query->getField('_service'), '_service not found');
     }
 
 

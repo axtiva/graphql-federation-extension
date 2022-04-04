@@ -26,35 +26,44 @@ final class FederationSchemaExtender
             }
         }
 
-        if (empty($entityTypeNamesList)) {
-            return $schema;
-        }
-
-        $entityTypeNames = implode(' | ', $entityTypeNamesList);
         $queryDefinition = in_array('Query', array_keys($schema->getTypeMap()))
             ? 'extend type Query @extends'
             : 'type Query @extends';
-        $unionEntitiesType = "union _Entity = $entityTypeNames";
+
         $sdl = <<< GRAPHQL
-$unionEntitiesType
-scalar _Any
 type _Service {
   sdl: String!
 }
 $queryDefinition {
-  _entities(representations: [_Any!]!): [_Entity]!
   _service: _Service!
 }
 GRAPHQL;
 
         $documentAST = Parser::parse($sdl);
-        $apolloSchema = SchemaExtender::extend($schema, $documentAST);
+        $schema = SchemaExtender::extend($schema, $documentAST);
         /** @var ObjectType $query */
-        $query = $apolloSchema->getType('Query');
+        $query = $schema->getType('Query');
         if ($query->getField('_service')->resolveFn === null) {
             $query->getField('_service')->resolveFn = new Federation_ServiceResolver();
         }
 
-        return $apolloSchema;
+        if (empty($entityTypeNamesList)) {
+            return $schema;
+        }
+
+        $entityTypeNames = implode(' | ', $entityTypeNamesList);
+        $queryDefinition = 'extend type Query @extends';
+        $unionEntitiesType = "union _Entity = $entityTypeNames";
+        $sdl = <<< GRAPHQL
+
+$unionEntitiesType
+scalar _Any
+$queryDefinition {
+  _entities(representations: [_Any!]!): [_Entity]!
+}
+GRAPHQL;
+
+        $documentAST = Parser::parse($sdl);
+        return SchemaExtender::extend($schema, $documentAST);
     }
 }
